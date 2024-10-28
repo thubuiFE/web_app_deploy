@@ -1,4 +1,4 @@
-FROM node:lts-alpine as build  # Use Node.js LTS Alpine image as build environment
+FROM node:lts-alpine  # Use Node.js LTS Alpine image as build environment
 
 WORKDIR /app  # Set working directory inside the container to /app
 
