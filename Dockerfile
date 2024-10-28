@@ -1,4 +1,4 @@
-FROM node:16.20-alpine
+FROM node:latest AS build
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ COPY . .
 
 RUN npm run build  
 
-FROM nginx:latest as prod 
+FROM nginx:latest
 
 COPY --from=build /app/build /usr/share/nginx/html
 
