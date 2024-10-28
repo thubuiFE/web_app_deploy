@@ -1,21 +1,21 @@
-FROM node:16.20-alpine  # Use Node.js LTS Alpine image as build environment
+FROM node:16.20-alpine
 
-WORKDIR /app  # Set working directory inside the container to /app
+WORKDIR /app
 
-COPY package*.json ./  # Copy package.json and package-lock.json files to /app directory
+COPY package*.json ./ 
 
-RUN npm ci  # Install dependencies using npm CI mode for faster and consistent builds
+RUN npm ci 
 
-COPY . .  # Copy the rest of the application files to /app directory
+COPY . .  
 
-RUN npm run build  # Build the application using npm script
+RUN npm run build  
 
-FROM nginx:latest as prod  # Use the latest Nginx image as production environment
+FROM nginx:latest as prod 
 
-COPY --from=build /app/build /usr/share/nginx/html  # Copy built files from the previous stage to Nginx HTML directory
+COPY --from=build /app/build /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/nginx.conf  # Copy custom Nginx configuration file to override default configuration
+COPY nginx.conf /etc/nginx/nginx.conf
 
-EXPOSE 80/tcp  # Expose port 80 for incoming HTTP traffic
+EXPOSE 80/tcp 
 
-CMD ["/usr/sbin/nginx", "-g", "daemon off;"]  # Start Nginx server with daemon off for foreground execution
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"] 
